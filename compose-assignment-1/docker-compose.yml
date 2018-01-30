@@ -1,16 +1,17 @@
 version: '2'
 
 services:
-  posgres:
+  db:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=password
     volumes:
-      - drupal-data:/var/lib/postgresql/data
+      - psql:/var/lib/postgresql/data
   drupal:
-    image: custom-drupal
-    build: .
+    image: drupal
     ports:
       - "8080:80" 
+    depends_on:
+      - db
 volumes:
-  drupal-data:
+  psql:
